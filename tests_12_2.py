@@ -1,4 +1,86 @@
 import unittest
+from HumanMoveTest.runner_and_tournament import Runner
+
+
+class RunnerTest(unittest.TestCase):
+    def test_walk(self):
+        """
+        test_walk - метод, в котором создаётся объект класса Runner с произвольным именем.
+        Далее вызовите метод walk у этого объекта 10 раз.
+        После чего методом assertEqual сравните distance этого объекта со значением 50.
+        """
+        runner = Runner('name')
+        for _ in range(10):
+            runner.walk()
+        self.assertEqual(runner.distance, 50)
+
+    def test_run(self):
+        """
+        test_run - метод, в котором создаётся объект класса Runner с произвольным именем.
+        Далее вызовите метод run у этого объекта 10 раз.
+        После чего методом assertEqual сравните distance этого объекта со значением 100.
+        """
+        runner = Runner('name')
+        for _ in range(10):
+            runner.run()
+        self.assertEqual(runner.distance, 100)
+
+    def test_challenge(self):
+        """
+        test_challenge - метод в котором создаются 2 объекта класса Runner с произвольными именами.
+        Далее 10 раз у объектов вызываются методы run и walk соответственно.
+        Т.к. дистанции должны быть разными, используйте метод assertNotEqual, чтобы убедится в неравенстве результатов.
+        """
+        runner1 = Runner('name1')
+        runner2 = Runner('name1')
+        for _ in range(10):
+            runner1.walk()
+            runner2.run()
+        self.assertNotEqual(runner1.distance, runner2.distance)
+
+
+class TournamentTest(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        создаётся атрибут класса all_results.
+        Это словарь в который будут сохраняться результаты всех тестов.
+        """
+        cls.all_results = {}
+
+    def setUp(self):
+        """ создаются 3 объекта Runner """
+        self.runners = [
+            Runner("Усэйн", 10),
+            Runner("Андрей", 9),
+            Runner("Ник", 3),
+        ]
+
+    @classmethod
+    def tearDownClass(cls):
+        """ выводятся all_results по очереди в столбец. """
+        print(cls.all_results)
+
+    def test_tournament1(self):
+        pass
+
+    def test_tournament2(self):
+        pass
+
+    def test_tournament3(self):
+        pass
+
+# Так же методы тестирования забегов, в которых создаётся объект Tournament на дистанцию 90.
+# У объекта класса Tournament запускается метод start,
+# который возвращает словарь в переменную all_results.
+# В конце вызывается метод assertTrue, в котором сравниваются последний объект из all_results
+# (брать по наибольшему ключу) и предполагаемое имя последнего бегуна.
+# Напишите 3 таких метода, где в забегах участвуют (порядок передачи в объект Tournament соблюсти):
+# Усэйн и Ник
+# Андрей и Ник
+# Усэйн, Андрей и Ник.
+# Как можно понять: Ник всегда должен быть последним.
 
 
 if __name__ == '__main__':
