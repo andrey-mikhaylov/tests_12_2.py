@@ -63,44 +63,49 @@ class TournamentTest(unittest.TestCase):
         for results in cls.all_results.values():
             print(f'{{{', '.join([f'{place}: {name}' for place, name in results.items()])}}}')
 
-    def _test_tournament(self, *people):
-        # Так же методы тестирования забегов, в которых создаётся объект Tournament на дистанцию 90.
+    def _test_tournament(self, distance:int, *people:str):
         participants = [runner for runner in self.runners if runner in people]
-        tournament = Tournament(90, *participants)
+        tournament = Tournament(distance, *participants)
         # У объекта класса Tournament запускается метод start,
         # который возвращает словарь в переменную all_results.
         return tournament.start()
 
+    # методы тестирования забегов, в которых создаётся объект Tournament на дистанцию 90.
+    # Ник всегда должен быть последним.
     def test_tournament1(self):
-        results = self._test_tournament('Усэйн', 'Ник')
+        results = self._test_tournament(90, 'Усэйн', 'Ник')
         self.all_results['first'] = results
-        self.assertTrue(results[len(results)] == 'Ник')
+        self.assertTrue(results[max(results)] == 'Ник')
 
     def test_tournament2(self):
-        results = self._test_tournament('Андрей', 'Ник')
+        results = self._test_tournament(90, 'Андрей', 'Ник')
         self.all_results['second'] = results
-        self.assertTrue(results[len(results)] == 'Ник')
+        self.assertTrue(results[max(results)] == 'Ник')
 
     def test_tournament3(self):
-        results = self._test_tournament('Усэйн', 'Андрей', 'Ник')
+        results = self._test_tournament(90, 'Усэйн', 'Андрей', 'Ник')
+        self.all_results['third'] = results
+        self.assertTrue(results[max(results)] == 'Ник')
+
+    """
+    В данной задаче, а именно в методе start класса Tournament, допущена логическая ошибка. 
+    В результате его работы бегун с меньшей скоростью может пробежать некоторые дистанции быстрее, 
+    чем бегун с большей. Попробуйте решить эту проблему и обложить дополнительными тестами.
+    """
+    def test_tournament4(self):
+        results = self._test_tournament(5, 'Усэйн', 'Андрей', 'Ник')
         self.all_results['third'] = results
         self.assertTrue(results[len(results)] == 'Ник')
 
 
-# Так же методы тестирования забегов, в которых создаётся объект Tournament на дистанцию 90.
-# У объекта класса Tournament запускается метод start,
-# который возвращает словарь в переменную all_results.
-# В конце вызывается метод assertTrue, в котором сравниваются последний объект из all_results
-# (брать по наибольшему ключу) и предполагаемое имя последнего бегуна.
-# Напишите 3 таких метода, где в забегах участвуют (порядок передачи в объект Tournament соблюсти):
-# Усэйн и Ник
-# Андрей и Ник
-# Усэйн, Андрей и Ник.
-# Как можно понять: Ник всегда должен быть последним.
-
-
 if __name__ == '__main__':
     unittest.main()
+    """
+    Вывод на консоль:
+    {1: Усэйн, 2: Ник}
+    {1: Андрей, 2: Ник}
+    {1: Андрей, 2: Усэйн, 3: Ник}
+    """
 
 
 """
