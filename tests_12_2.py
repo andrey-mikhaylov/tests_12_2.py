@@ -1,5 +1,5 @@
 import unittest
-from HumanMoveTest.runner_and_tournament import Runner
+from HumanMoveTest.runner_and_tournament import Runner, Tournament
 
 
 class RunnerTest(unittest.TestCase):
@@ -60,16 +60,32 @@ class TournamentTest(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         """ выводятся all_results по очереди в столбец. """
-        print(cls.all_results)
+        for results in cls.all_results.values():
+            print(f'{{{', '.join([f'{place}: {name}' for place, name in results.items()])}}}')
+
+    def _test_tournament(self, *people):
+        # Так же методы тестирования забегов, в которых создаётся объект Tournament на дистанцию 90.
+        participants = [runner for runner in self.runners if runner in people]
+        tournament = Tournament(90, *participants)
+        # У объекта класса Tournament запускается метод start,
+        # который возвращает словарь в переменную all_results.
+        return tournament.start()
 
     def test_tournament1(self):
-        pass
+        results = self._test_tournament('Усэйн', 'Ник')
+        self.all_results['first'] = results
+        self.assertTrue(results[len(results)] == 'Ник')
 
     def test_tournament2(self):
-        pass
+        results = self._test_tournament('Андрей', 'Ник')
+        self.all_results['second'] = results
+        self.assertTrue(results[len(results)] == 'Ник')
 
     def test_tournament3(self):
-        pass
+        results = self._test_tournament('Усэйн', 'Андрей', 'Ник')
+        self.all_results['third'] = results
+        self.assertTrue(results[len(results)] == 'Ник')
+
 
 # Так же методы тестирования забегов, в которых создаётся объект Tournament на дистанцию 90.
 # У объекта класса Tournament запускается метод start,
