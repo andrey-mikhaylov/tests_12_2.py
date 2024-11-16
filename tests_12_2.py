@@ -63,7 +63,7 @@ class TournamentTest(unittest.TestCase):
         for tournament, results in cls.all_results.items():
             print(f'{tournament}: {{{', '.join([f'{place}: {name}' for place, name in results.items()])}}}')
 
-    def _test_tournament(self, distance:int, *people:str):
+    def __test_tournament(self, distance:int, *people:str):
         participants = [runner for runner in self.runners if runner in people]
         tournament = Tournament(distance, *participants)
         # У объекта класса Tournament запускается метод start,
@@ -73,17 +73,17 @@ class TournamentTest(unittest.TestCase):
     # методы тестирования забегов, в которых создаётся объект Tournament на дистанцию 90.
     # Ник всегда должен быть последним.
     def test_tournament1(self):
-        results = self._test_tournament(90, 'Усэйн', 'Ник')
+        results = self.__test_tournament(90, 'Усэйн', 'Ник')
         self.all_results['1'] = results
         self.assertTrue(results[max(results)] == 'Ник')
 
     def test_tournament2(self):
-        results = self._test_tournament(90, 'Андрей', 'Ник')
+        results = self.__test_tournament(90, 'Андрей', 'Ник')
         self.all_results['2'] = results
         self.assertTrue(results[max(results)] == 'Ник')
 
     def test_tournament3(self):
-        results = self._test_tournament(90, 'Усэйн', 'Андрей', 'Ник')
+        results = self.__test_tournament(90, 'Усэйн', 'Андрей', 'Ник')
         self.all_results['3'] = results
         self.assertTrue(results[max(results)] == 'Ник')
 
@@ -93,7 +93,7 @@ class TournamentTest(unittest.TestCase):
     чем бегун с большей. Попробуйте решить эту проблему и обложить дополнительными тестами.
     """
     def test_tournament4(self):
-        results = self._test_tournament(5, 'Усэйн', 'Андрей', 'Ник')
+        results = self.__test_tournament(5, 'Усэйн', 'Андрей', 'Ник')
         self.all_results['4'] = results
         self.assertTrue(results[len(results)] == 'Ник')
 
