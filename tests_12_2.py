@@ -60,8 +60,8 @@ class TournamentTest(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         """ выводятся all_results по очереди в столбец. """
-        for results in cls.all_results.values():
-            print(f'{{{', '.join([f'{place}: {name}' for place, name in results.items()])}}}')
+        for tournament, results in cls.all_results.items():
+            print(f'{tournament}: {{{', '.join([f'{place}: {name}' for place, name in results.items()])}}}')
 
     def _test_tournament(self, distance:int, *people:str):
         participants = [runner for runner in self.runners if runner in people]
@@ -74,17 +74,17 @@ class TournamentTest(unittest.TestCase):
     # Ник всегда должен быть последним.
     def test_tournament1(self):
         results = self._test_tournament(90, 'Усэйн', 'Ник')
-        self.all_results['first'] = results
+        self.all_results['1'] = results
         self.assertTrue(results[max(results)] == 'Ник')
 
     def test_tournament2(self):
         results = self._test_tournament(90, 'Андрей', 'Ник')
-        self.all_results['second'] = results
+        self.all_results['2'] = results
         self.assertTrue(results[max(results)] == 'Ник')
 
     def test_tournament3(self):
         results = self._test_tournament(90, 'Усэйн', 'Андрей', 'Ник')
-        self.all_results['third'] = results
+        self.all_results['3'] = results
         self.assertTrue(results[max(results)] == 'Ник')
 
     """
@@ -94,7 +94,7 @@ class TournamentTest(unittest.TestCase):
     """
     def test_tournament4(self):
         results = self._test_tournament(5, 'Усэйн', 'Андрей', 'Ник')
-        self.all_results['third'] = results
+        self.all_results['4'] = results
         self.assertTrue(results[len(results)] == 'Ник')
 
 

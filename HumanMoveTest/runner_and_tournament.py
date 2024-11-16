@@ -29,7 +29,7 @@ class Tournament:
         finishers = {}
         place = 1
         while self.participants:
-            for participant in self.participants:
+            for participant in sorted(self.participants, key=lambda x: x.distance, reverse=True):
                 participant.run()
                 if participant.distance >= self.full_distance:
                     finishers[place] = participant
