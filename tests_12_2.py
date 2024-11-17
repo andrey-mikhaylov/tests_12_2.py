@@ -95,7 +95,7 @@ class TournamentTest(unittest.TestCase):
     def test_tournament4(self):
         results = self.__test_tournament(5, 'Усэйн', 'Андрей', 'Ник')
         self.all_results['4'] = results
-        self.assertTrue(results[len(results)] == 'Ник')
+        self.assertTrue(results[max(results)] == 'Ник')
 
 
 if __name__ == '__main__':
